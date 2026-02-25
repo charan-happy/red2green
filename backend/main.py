@@ -96,7 +96,7 @@ async def prometheus_metrics():
 async def github_webhook(request: Request):
     body = await request.json()
     event = request.headers.get("X-GitHub-Event", "")
-    logger.info("GitHub webhook received", event=event)
+    logger.info("GitHub webhook received", github_event=event)
     record_webhook_event("github")
     
     # Extract failure information from webhook if present
