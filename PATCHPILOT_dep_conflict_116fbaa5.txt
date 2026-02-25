@@ -1,0 +1,15 @@
+# Dependency Conflict Fix
+
+## Issue
+Version conflict between dependencies
+
+## Solution
+Updated requirements.txt with compatible versions
+
+## Changes
+- Updated package versions to compatible ranges
+- Verified with pip dependency resolver
+- Tested with test suite
+
+## Files Modified
+- `requirements.txt` - Updated versions
