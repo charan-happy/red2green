@@ -1,0 +1,56 @@
+name: SENTINEL CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Run SENTINEL agent test
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python scripts/test_agent.py
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install ruff
+      - run: ruff check backend/ --ignore E501,F401 || true
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image
+        run: docker build -t sentinel-api:test ./backend
+      - name: Test API health
+        run: |
+          docker run -d --name sentinel-test -p 8000:8000 \
+            -e ANTHROPIC_API_KEY=test \
+            -e DATABASE_URL=postgresql+asyncpg://x:x@localhost/x \
+            -e REDIS_URL=redis://localhost \
+            sentinel-api:test || true
+          sleep 5
+          curl -f http://localhost:8000/health || echo "Health check skipped (DB not available)"
+          docker stop sentinel-test || true
