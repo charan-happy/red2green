@@ -10,8 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN useradd -m -u 1000 sentinel && chown -R sentinel:sentinel /app
-USER sentinel
+RUN useradd -m -u 1000 patchpilot && chown -R patchpilot:patchpilot /app
+USER patchpilot
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1

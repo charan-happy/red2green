@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN useradd -m -u 1000 sentinel
-USER sentinel
+RUN useradd -m -u 1000 patchpilot
+USER patchpilot
 
-CMD ["python", "-m", "workers.healing_worker"]
+CMD ["python", "-m", "workers"]

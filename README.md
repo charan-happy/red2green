@@ -1,8 +1,8 @@
-# 🛡️ SENTINEL — Autonomous Self-Healing CI/CD Agent
+# PatchPilot — Autonomous Self-Healing CI/CD Agent
 
 > AGE OF AGENTS Hackathon | Track: Self-Testing Code Responder (SDLC)
 
-SENTINEL autonomously watches CI/CD pipelines and heals broken builds — before a human needs to wake up.
+PatchPilot autonomously watches CI/CD pipelines and heals broken builds — before a human needs to wake up.
 
 ## 🚀 Quick Start
 
@@ -87,16 +87,16 @@ SLACK_BOT_TOKEN=xoxb-...         # Optional notifications
 PAGERDUTY_ROUTING_KEY=...         # Optional escalation
 ```
 
-## 🏗️ Production Deployment
+## 🚀 Production Deployment
 
 ```bash
-# Kubernetes
-kubectl apply -f infrastructure/k8s/
+# Using Docker Compose
+docker-compose -f docker-compose.yml up -d
 
-# Scale workers
-kubectl scale deployment sentinel-worker --replicas=8
+# Scale workers by updating docker-compose.yml and redeploying
+docker-compose up -d --scale worker=8
 ```
 
 ---
 
-*Built for the AGE OF AGENTS Hackathon — SENTINEL turns red builds green, automatically.*
+*Built for the AGE OF AGENTS Hackathon — PatchPilot turns red builds green, automatically.*
