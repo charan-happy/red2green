@@ -1,7 +1,7 @@
 """PatchPilot — FastAPI Application"""
 import uuid
 import asyncio
-import json
+import jso
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Dict, Any, List
 from datetime import datetime
