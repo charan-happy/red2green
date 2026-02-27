@@ -46,6 +46,11 @@ async def main():
         print("❌ ANTHROPIC_API_KEY not found. Set it in .env or environment.")
         sys.exit(1)
 
+    # Quick validation: detect common OpenAI-style keys to avoid using wrong provider
+    if api_key.startswith("sk-"):
+        print("❌ The provided key looks like an OpenAI-style key (starts with 'sk-').")
+        print("   Please set an Anthropic API key in the `ANTHROPIC_API_KEY` secret (console.anthropic.com).")
+        sys.exit(1)
     print("🛡️  SENTINEL Agent Test")
     print("=" * 50)
     print("📋 Simulating CI failure: npm dependency conflict")
